@@ -2,8 +2,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>陈粒粒的陷阱</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>爱的测试</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script>
@@ -12,11 +12,11 @@
                 extend: {
                     colors: {
                         primary: '#FF4B91',
-                        secondary: '#FFD1DA',
-                        accent: '#FF9EB1',
+                        secondary: '#9C6ADE',
+                        accent: '#FFD166',
                     },
                     fontFamily: {
-                        cute: ['"Comic Sans MS"', '"Marker Felt"', 'Arial', 'sans-serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
                     },
                 }
             }
@@ -25,249 +25,187 @@
     <style type="text/tailwindcss">
         @layer utilities {
             .text-shadow {
-                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
-            .button-hover {
-                transition: all 0.3s ease;
-            }
-            .button-hover:hover {
-                transform: scale(1.1);
-                box-shadow: 0 10px 25px -5px rgba(255, 75, 145, 0.4);
-            }
-            .animate-beat {
-                animation: beat 0.5s infinite alternate;
-            }
-            @keyframes beat {
-                to { transform: scale(1.05); }
-            }
-            .float-animation {
+            .animate-float {
                 animation: float 3s ease-in-out infinite;
             }
-            @keyframes float {
-                0%, 100% { transform: translateY(0); }
-                50% { transform: translateY(-10px); }
+            .animate-pulse-slow {
+                animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
             }
-            .scale-up {
-                transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            .animate-bounce-slow {
+                animation: bounce 2s infinite;
             }
-            .button-touch {
-                transition: background-color 0.2s ease;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
             }
-            .overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0,0,0,0.7);
-                z-index: 9999;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                padding: 20px;
-                opacity: 0;
-                pointer-events: none;
-                transition: opacity 0.3s ease;
-            }
-            .overlay.active {
-                opacity: 1;
-                pointer-events: auto;
-            }
-            .fake-close-btn {
-                background-color: #f44336;
-                color: white;
-                border: none;
-                padding: 15px 30px;
-                border-radius: 50px;
-                font-size: 1.2rem;
-                cursor: pointer;
-                margin-top: 20px;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-                transition: all 0.3s ease;
-            }
-            .fake-close-btn:hover {
-                transform: scale(1.05);
-                box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            50% {
+                transform: translateY(-10px);
             }
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-pink-100 to-purple-100 font-cute flex flex-col items-center justify-center p-4">
-    <div class="max-w-md w-full bg-white/80 backdrop-blur-md rounded-3xl shadow-xl p-8 relative overflow-hidden">
-        <!-- 装饰元素 -->
-        <div class="absolute -top-10 -right-10 w-32 h-32 bg-primary/20 rounded-full blur-2xl"></div>
-        <div class="absolute -bottom-16 -left-16 w-40 h-40 bg-purple-200 rounded-full blur-2xl"></div>
+<body class="bg-gradient-to-br from-pink-100 to-purple-100 min-h-screen flex flex-col items-center justify-center p-4 overflow-hidden">
+    <!-- 装饰元素 -->
+    <div class="absolute -top-20 -left-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-32 -right-20 w-64 h-64 bg-secondary/20 rounded-full blur-3xl"></div>
+    
+    <!-- 主容器 -->
+    <div class="relative z-10 bg-white/80 backdrop-blur-md rounded-2xl shadow-xl max-w-md w-full p-8 border border-white/30">
+        <!-- 标题 -->
+        <div class="text-center mb-8">
+            <h1 class="text-[clamp(1.8rem,5vw,2.5rem)] font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-2 animate-pulse-slow">爱的测试</h1>
+            <p class="text-gray-600 text-lg">点击正确答案解锁惊喜</p>
+        </div>
         
-        <div class="relative z-10">
-            <div class="text-center mb-10">
-                <h1 class="text-[clamp(1.8rem,5vw,2.5rem)] font-bold text-primary mb-4 text-shadow float-animation">孔小松今天有没有想我呀</h1>
-                <div class="w-24 h-1 bg-gradient-to-r from-primary to-purple-400 mx-auto rounded-full mb-6"></div>
-                <p class="text-gray-700 text-lg mb-8">只能选 <span class="text-primary font-bold">想了</span> 哦~</p>
+        <!-- 问题卡片 -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8 border border-primary/20 transform transition-all duration-500 hover:shadow-primary/20 hover:shadow-xl">
+            <div class="flex items-center justify-center mb-6">
+                <i class="fa fa-heart text-primary text-5xl animate-float"></i>
             </div>
+            <p class="text-center text-[clamp(1.2rem,3vw,1.5rem)] font-medium text-gray-800 mb-6">今天有没有想我呀？</p>
             
-            <div class="flex flex-col items-center space-y-6">
-                <button id="yesBtn" class="button-hover button-touch bg-primary hover:bg-primary/90 text-white font-bold py-4 px-12 rounded-full text-xl shadow-lg focus:outline-none focus:ring-4 focus:ring-primary/30 transition-all">
-                    想了
+            <!-- 按钮区域 -->
+            <div class="grid grid-cols-1 gap-4">
+                <button id="yesBtn" class="bg-gradient-to-r from-primary to-secondary text-white font-bold py-4 px-6 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 flex items-center justify-center">
+                    <i class="fa fa-check-circle mr-2"></i> 想了
                 </button>
                 
-                <button id="noBtn" class="button-hover button-touch bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-4 px-12 rounded-full text-xl shadow-md focus:outline-none scale-up">
-                    没有
+                <button id="noBtn" class="bg-gray-100 text-gray-700 font-bold py-4 px-6 rounded-full shadow-md transform transition-all duration-300 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 flex items-center justify-center">
+                    <i class="fa fa-times-circle mr-2"></i> 没想
                 </button>
             </div>
-            
-            <div id="result" class="mt-10 text-center hidden">
-                <div class="p-6 bg-secondary/70 rounded-2xl">
-                    <h2 id="resultText" class="text-2xl font-bold text-primary mb-0"></h2>
-                </div>
+        </div>
+        
+        <!-- 底部装饰 -->
+        <div class="flex justify-center">
+            <div class="flex space-x-1">
+                <div class="w-2 h-2 rounded-full bg-primary"></div>
+                <div class="w-2 h-2 rounded-full bg-secondary"></div>
+                <div class="w-2 h-2 rounded-full bg-accent"></div>
             </div>
         </div>
     </div>
     
-    <!-- 强制遮罩层 -->
-    <div id="exitOverlay" class="overlay">
-        <div class="bg-white rounded-2xl p-6 max-w-md w-full text-center shadow-2xl">
-            <i class="fa fa-lock text-5xl text-primary mb-4"></i>
-            <h2 class="text-2xl font-bold text-gray-800 mb-3">无法退出哦~</h2>
-            <p class="text-gray-600 mb-6">必须先点击"想了"才能离开这个页面哦~</p>
-            <button id="fakeCloseBtn" class="fake-close-btn">
-                知道了，去点击"想了"
+    <!-- 成功弹窗 -->
+    <div id="successModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 text-center transform transition-all duration-500 scale-95 opacity-0" id="modalContent">
+            <div class="mb-4">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-500 mb-4">
+                    <i class="fa fa-heart text-3xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">我就知道你想我！</h2>
+                <p class="text-gray-600 mb-6">你是我生命中最美的遇见~</p>
+            </div>
+            <button id="closeModal" class="bg-gradient-to-r from-primary to-secondary text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 focus:outline-none">
+                确认 <i class="fa fa-arrow-right ml-1"></i>
             </button>
         </div>
     </div>
-    
+
+    <!-- 阻止返回弹窗 -->
+    <div id="blockBackModal" class="fixed inset-0 bg-black/70 flex items-center justify-center z-40 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 text-center">
+            <div class="mb-4">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 text-red-500 mb-4">
+                    <i class="fa fa-lock text-3xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">不可以离开哦</h2>
+                <p class="text-gray-600 mb-6">只有回答想了才能退出哦~</p>
+            </div>
+            <button id="closeBlockModal" class="bg-gradient-to-r from-primary to-secondary text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 focus:outline-none">
+                继续思考 <i class="fa fa-heart ml-1"></i>
+            </button>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const yesBtn = document.getElementById('yesBtn');
             const noBtn = document.getElementById('noBtn');
-            const result = document.getElementById('result');
-            const resultText = document.getElementById('resultText');
-            const exitOverlay = document.getElementById('exitOverlay');
-            const fakeCloseBtn = document.getElementById('fakeCloseBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            const successModal = document.getElementById('successModal');
+            const modalContent = document.getElementById('modalContent');
+            const closeModal = document.getElementById('closeModal');
+            const blockBackModal = document.getElementById('blockBackModal');
+            const closeBlockModal = document.getElementById('closeBlockModal');
             
-            let scaleFactor = 1;
-            let clickCount = 0;
-            let isYesClicked = false;
-
-            // 初始化历史记录栈
-            function initHistoryProtection() {
-                history.pushState(null, null, window.location.href);
+            // 随机移动"没想"按钮
+            noBtn.addEventListener('mouseover', function() {
+                const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+                const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+                
+                const randomX = Math.floor(Math.random() * maxX);
+                const randomY = Math.floor(Math.random() * maxY);
+                
+                noBtn.style.position = 'fixed';
+                noBtn.style.left = `${randomX}px`;
+                noBtn.style.top = `${randomY}px`;
+                noBtn.style.zIndex = '20';
+            });
+            
+            // 阻止页面关闭或刷新
+            window.addEventListener('beforeunload', function(e) {
+                e.preventDefault();
+                e.returnValue = '';
+                blockBackModal.classList.remove('hidden');
+                return '';
+            });
+            
+            // 阻止微信内置浏览器返回
+            function blockWechatBack() {
+                history.pushState(null, null, location.href);
                 window.addEventListener('popstate', function() {
-                    if (!isYesClicked) {
-                        history.pushState(null, null, window.location.href);
-                        showExitOverlay();
-                    }
+                    history.pushState(null, null, location.href);
+                    blockBackModal.classList.remove('hidden');
                 });
             }
-
-            // 显示退出遮罩层
-            function showExitOverlay() {
-                exitOverlay.classList.add('active');
-                // 阻止背景滚动
-                document.body.style.overflow = 'hidden';
-            }
-
-            // 隐藏退出遮罩层
-            function hideExitOverlay() {
-                exitOverlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-
-            // 处理"想了"按钮点击
-            yesBtn.addEventListener('click', function() {
-                resultText.textContent = '呕吼~ 我就知道~';
-                result.classList.remove('hidden');
-                yesBtn.disabled = true;
-                noBtn.disabled = true;
-                isYesClicked = true;
-                hideExitOverlay();
-                
-                // 允许正常退出
-                setTimeout(() => {
-                    // 清除历史记录保护
-                    window.onpopstate = null;
-                    // 微信环境下特殊处理
-                    if (typeof WeixinJSBridge !== 'undefined') {
-                        WeixinJSBridge.call('closeWindow');
-                    }
-                }, 1000);
-            });
-
-            // 处理"没有"按钮点击
-            noBtn.addEventListener('click', function() {
-                clickCount++;
-                if (clickCount > 3) {
-                    noBtn.disabled = true;
-                    yesBtn.classList.add('animate-beat');
-                    return;
-                }
-
-                scaleFactor *= 1.2;
-                noBtn.style.transform = `scale(${scaleFactor})`;
-                
-                if (scaleFactor > 1.8) {
-                    const maxX = window.innerWidth - noBtn.offsetWidth - 40;
-                    const maxY = window.innerHeight - noBtn.offsetHeight - 100;
-                    const randomX = Math.floor(Math.random() * maxX);
-                    const randomY = Math.floor(Math.random() * maxY);
-                    noBtn.style.position = 'fixed';
-                    noBtn.style.left = `${randomX}px`;
-                    noBtn.style.top = `${randomY}px`;
-                }
-                
-                yesBtn.classList.add('animate-beat');
-                setTimeout(() => yesBtn.classList.remove('animate-beat'), 1000);
-            });
-
-            // 伪装的关闭按钮
-            fakeCloseBtn.addEventListener('click', function() {
-                // 滚动到"想了"按钮位置
-                yesBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                // 让"想了"按钮跳动
-                yesBtn.classList.add('animate-beat');
-                setTimeout(() => yesBtn.classList.remove('animate-beat'), 2000);
-                // 隐藏遮罩层
-                hideExitOverlay();
-            });
-
-            // 触摸事件优化
-            ['touchstart', 'touchend'].forEach(event => {
-                yesBtn.addEventListener(event, e => {
-                    e.preventDefault();
-                    if (event === 'touchstart') yesBtn.classList.add('bg-primary/80');
-                    else yesBtn.classList.remove('bg-primary/80');
-                });
-                noBtn.addEventListener(event, e => {
-                    e.preventDefault();
-                    if (event === 'touchstart') noBtn.classList.add('bg-gray-400');
-                    else noBtn.classList.remove('bg-gray-400');
-                });
-            });
-
-            // 微信环境检测
-            function isInWechat() {
-                return navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1;
-            }
-
-            // 微信环境下的特殊处理
-            if (isInWechat()) {
-                // 监听微信返回按钮
-                document.addEventListener('WeixinJSBridgeReady', function() {
-                    WeixinJSBridge.on('menu:back', function() {
-                        if (!isYesClicked) {
-                            e.preventDefault();
-                            showExitOverlay();
-                        }
-                    });
-                }, false);
-            }
-
-            // 初始化保护机制
-            initHistoryProtection();
             
-            // 首次加载时显示遮罩层
-            setTimeout(showExitOverlay, 1000);
+            // 检查是否在微信浏览器中
+            function isWechatBrowser() {
+                const ua = navigator.userAgent.toLowerCase();
+                return ua.indexOf('micromessenger') !== -1;
+            }
+            
+            // 如果在微信浏览器中，阻止返回
+            if (isWechatBrowser()) {
+                blockWechatBack();
+            }
+            
+            // 点击"想了"按钮
+            yesBtn.addEventListener('click', function() {
+                // 显示成功弹窗
+                successModal.classList.remove('hidden');
+                setTimeout(() => {
+                    modalContent.classList.remove('scale-95', 'opacity-0');
+                    modalContent.classList.add('scale-100', 'opacity-100');
+                }, 10);
+                
+                // 允许页面关闭
+                window.removeEventListener('beforeunload', function() {});
+            });
+            
+            // 关闭成功弹窗
+            closeModal.addEventListener('click', function() {
+                // 隐藏弹窗
+                modalContent.classList.remove('scale-100', 'opacity-100');
+                modalContent.classList.add('scale-95', 'opacity-0');
+                
+                setTimeout(() => {
+                    successModal.classList.add('hidden');
+                    // 这里可以添加跳转逻辑
+                    window.location.href = "https://www.example.com/surprise";
+                }, 300);
+            });
+            
+            // 关闭阻止返回弹窗
+            closeBlockModal.addEventListener('click', function() {
+                blockBackModal.classList.add('hidden');
+            });
         });
     </script>
 </body>
 </html>
+    
